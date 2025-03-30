@@ -1,0 +1,44 @@
+# ================ C/C++ 编译产物 ================
+*.o
+*.a
+*.so
+*.out
+*.exe
+*.dll
+*.lib
+*.exp
+*.ilk
+*.pdb
+*.ipch
+
+# ================ 构建目录 ================
+build/
+bin/
+obj/
+Debug/
+Release/
+x64/
+.vscode/               # VSCode缓存
+.vs/                   # Visual Studio缓存
+CMakeCache.txt
+CMakeFiles/
+
+# ================ 动态内存工具生成产物 ================
+*.log
+core.*
+memleak_report.txt
+valgrind-out.txt
+
+# ================ IDE 配置文件 ================ 
+.idea/                # JetBrains IDE
+*.sln                 # Visual Studio
+*.vcxproj*
+*.suo
+
+# ================ 本地临时文件 ================ 
+*.swp
+*.swo
+*~
+.DS_Store             # macOS
+Thumbs.db             # Windows
+
