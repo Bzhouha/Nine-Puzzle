@@ -7,7 +7,7 @@
 
 
 
-class MeshManager {
+class meshmanager {
 
 };
 

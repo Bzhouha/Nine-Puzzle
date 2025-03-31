@@ -20,7 +20,9 @@ file(GLOB HEADERS
 )
 
 # 创建静态/动态库
-add_library(${MODULE_NAME} STATIC ${SOURCES} ${HEADERS})  # 或 SHARED
+add_library(${MODULE_NAME} STATIC ${SOURCES} ${HEADERS}
+        filemanager.cpp
+        filemanager.h)  # 或 SHARED
 
 # 暴露头文件目录（外部可访问）
 target_include_directories(${MODULE_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

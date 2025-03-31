@@ -7,10 +7,10 @@
 
 #include <iostream>
 #include <string>
-#include <GlobalVars.h>
+#include <globalvars.h>
 
 
-class FileManager
+class filemanager
 {
 public:
     static int parseArgument(int argc, char * argv[])
@@ -26,20 +26,20 @@ public:
                                 config_file = argv[i + 1];
                                 i++; // 跳过已处理的参数
                             } else
-                            {
-                                std::cerr << "Error: Missing filename after -f" << std::endl;
-                                return 1;
-                            }
+                                {
+                                    std::cerr << "Error: Missing filename after -f" << std::endl;
+                                    return 1;
+                                }
                     }
             }
         if (!config_file.empty())
             {
                 std::cout << "Using config file: " << config_file << std::endl;
             } else
-            {
-                std::cerr << "Error: No config file specified (use -f <file>)" << std::endl;
-                return 1;
-            }
+                {
+                    std::cerr << "Error: No config file specified (use -f <file>)" << std::endl;
+                    return 1;
+                }
         return 0;
     }
 };
