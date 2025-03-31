@@ -22,6 +22,7 @@ x64/
 .vs/                   # Visual Studio缓存
 CMakeCache.txt
 CMakeFiles/
+cmake-build-debug/
 
 # ================ 动态内存工具生成产物 ================
 *.log

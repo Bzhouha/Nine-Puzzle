@@ -1,19 +1,17 @@
 cmake_minimum_required(VERSION 3.30)
 project(Nine_Puzzle)
 
+# ---------- 编译器设置 ----------
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)  # 必须使用 C++17，否则报错
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
-
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
-# set root of location to find PETSc's pkg-config
+# ---------- PETSC 配置 ----------
 set(PETSC $ENV{PETSC_DIR}/$ENV{PETSC_ARCH})
 set(ENV{PKG_CONFIG_PATH} ${PETSC}/lib/pkgconfig)
 find_package(PkgConfig REQUIRED)
 pkg_search_module(PETSC REQUIRED IMPORTED_TARGET PETSc)
-
-# Remove the lines below if you do not wish to have PETSc determine the compilers
 execute_process ( COMMAND pkg-config PETSc --variable=ccompiler COMMAND tr -d '\n' OUTPUT_VARIABLE C_COMPILER)
 SET(CMAKE_C_COMPILER ${C_COMPILER})
 execute_process ( COMMAND pkg-config PETSc --variable=cxxcompiler COMMAND tr -d '\n' OUTPUT_VARIABLE CXX_COMPILER)
@@ -26,32 +24,30 @@ if (FORTRAN_COMPILER)
     enable_language(Fortran)
 endif (FORTRAN_COMPILER)
 
+# ---------- 第三方依赖 ----------
 find_package(yaml-cpp REQUIRED)
 
-# 设置源码根目录为 ${PROJECT_SOURCE_DIR}
-set(ROOT_DIR ${PROJECT_SOURCE_DIR})
-# 定义源码和头文件路径
-set(SRC_DIR ${ROOT_DIR}/src)
-set(INCLUDE_DIR ${ROOT_DIR}/include)
-# 收集源文件和头文件（自动扫描）
-file(GLOB SOURCES "${SRC_DIR}/*.cpp")    # 包含所有 .cpp 文件
-file(GLOB HEADERS "${INCLUDE_DIR}/*.h")  # 包含所有 .h 文件
 
-add_executable(Nine_Puzzle ${SOURCES})
+# ---------- 集成子模块 ----------
+add_subdirectory(src)
 
-target_include_directories(Nine_Puzzle PRIVATE ${INCLUDE_DIR})
+# ---------- 主程序配置 ----------
+# 可执行文件直接链接模块库
+add_executable(Nine_Puzzle src/main.cpp)
+target_link_libraries(Nine_Puzzle PRIVATE
+        fileManager
+        globalVars
+        meshManager
+        yaml-cpp::yaml-cpp
+        PkgConfig::PETSC
+)
 
-target_link_libraries(Nine_Puzzle PRIVATE yaml-cpp::yaml-cpp PkgConfig::PETSC)
-
-# 编译选项（可选）
+# ---------- 编译选项（可选） ----------
 #if(MSVC)
 #    target_compile_options(Nine_Puzzle PRIVATE /W4 /WX)
 #else()
 #    target_compile_options(Nine_Puzzle PRIVATE -Wall -Wextra -Werror -pedantic)
 #endif()
 
-install(
-        TARGETS Nine_Puzzle
-        RUNTIME DESTINATION bin     # 安装到 ${CMAKE_INSTALL_PREFIX}/bin
-# ARCHIVE DESTINATION lib   # 如果是静态库则启用
-)
+# ---------- 安装规则 ----------
+install(TARGETS Nine_Puzzle RUNTIME DESTINATION bin)     # 安装到 ${CMAKE_INSTALL_PREFIX}/bin
