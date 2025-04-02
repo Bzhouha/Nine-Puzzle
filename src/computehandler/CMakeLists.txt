@@ -7,7 +7,7 @@ set(MODULE_NAME ${current_subdir})
 set_property(GLOBAL PROPERTY "${current_subdir}_MODULE_NAME" "${MODULE_NAME}")
 
 # 定义依赖并存入全局属性
-set_property(GLOBAL PROPERTY ${MODULE_NAME}_DEPS "globalvars")
+#set_property(GLOBAL PROPERTY ${MODULE_NAME}_DEPS "globalvars")
 
 # 指定源码和头文件
 file(GLOB SOURCES

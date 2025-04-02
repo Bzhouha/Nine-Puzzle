@@ -26,13 +26,10 @@ endif (FORTRAN_COMPILER)
 
 # ---------- 第三方依赖 ----------
 find_package(yaml-cpp REQUIRED)
+find_package(Boost REQUIRED)
 
 # ---------- 集成子模块 ----------
 add_subdirectory(src)
-
-# ---------- 主程序配置 ----------
-add_executable(Nine_Puzzle src/main.cpp)
-target_link_libraries(Nine_Puzzle PRIVATE ${SUB_MODULES} yaml-cpp::yaml-cpp PkgConfig::PETSC)
 
 # ---------- 编译选项 ----------
 #if(MSVC)

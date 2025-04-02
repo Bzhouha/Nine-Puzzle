@@ -19,7 +19,7 @@ foreach(subdir ${SUB_DIRS})
         # 用全局属性标识当前处理的子目录
         set_property(GLOBAL PROPERTY PROJECT_CURRENT_SUBDIR "${subdir}")
         add_subdirectory(${subdir})
-        # ⭐核心逻辑: 检查子模块是否正确定义了 MODULE_NAME
+        # 核心逻辑: 检查子模块是否正确定义了 MODULE_NAME
         get_property(MODULE_NAME GLOBAL PROPERTY "${subdir}_MODULE_NAME")
         if(NOT MODULE_NAME)
             message(FATAL_ERROR "    -> 子模块 ${subdir} 未在全局属性中设置 MODULE_NAME!")
@@ -51,3 +51,12 @@ if(DEFINED SUB_MODULES)
 else()
     message(WARNING "* 未找到任何子模块！请检查子目录是否包含 CMakeLists.txt 并定义了 MODULE_NAME。")
 endif()
+
+# ---------- 主程序配置 ----------
+add_executable(Nine_Puzzle main.cpp)
+target_link_libraries(Nine_Puzzle PRIVATE
+        ${SUB_MODULES}
+        yaml-cpp::yaml-cpp
+        Boost::boost
+        PkgConfig::PETSC
+)
