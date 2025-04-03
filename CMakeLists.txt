@@ -39,4 +39,4 @@ add_subdirectory(src)
 #endif()
 
 # ---------- 安装规则 ----------
-install(TARGETS Nine_Puzzle RUNTIME DESTINATION bin)     # 安装到 ${CMAKE_INSTALL_PREFIX}/bin
+#install(TARGETS Nine_Puzzle RUNTIME DESTINATION bin)     # 安装到 ${CMAKE_INSTALL_PREFIX}/bin
